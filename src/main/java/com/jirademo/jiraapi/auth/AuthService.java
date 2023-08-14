@@ -15,23 +15,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-  private final UserRepository repository ;
+  private final UserRepository repository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
-  private final AuthenticationManager authenticationManager ;
+  private final AuthenticationManager authenticationManager;
+
   public AuthenticationResponse register(RegisterRequest request) {
-     var user = User.builder()
-             .name(request.getName())
-             .email(request.getEmail())
-             .password(passwordEncoder.encode(request.getPassword()))
-             .role(Role.ADMIN)
-             .build();
-     repository.save(user);
-     var jwt = jwtService.genrateToken(user);
-      return AuthenticationResponse.builder()
-              .token(jwt)
-              .build();
+    var user = User.builder()
+            .name(request.getName())
+            .email(request.getEmail())
+            .password(passwordEncoder.encode(request.getPassword()))
+            .role(Role.ADMIN)
+            .build();
+    repository.save(user);
+    var jwt = jwtService.genrateToken(user);
+    return AuthenticationResponse.builder()
+            .token(jwt)
+            .build();
   }
+
   public AuthenticationResponse login(LoginRequest request) {
 
     authenticationManager.authenticate(
@@ -41,8 +43,8 @@ public class AuthService {
             )
     );
     //? if it coneect we need to genrate a token
-  var user = repository.findByEmail(request.getEmail())
-          .orElseThrow();
+    var user = repository.findByEmail(request.getEmail())
+            .orElseThrow();
     var jwt = jwtService.genrateToken(user);
     return AuthenticationResponse.builder()
             .token(jwt)

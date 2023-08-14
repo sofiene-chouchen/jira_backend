@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.config;
 
+import com.jirademo.jiraapi.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,20 +20,18 @@ public class JwtService {
 
 
   private static final String SECRET_KEY = "d69cbefbea9c71130837a97a355ea62b497c5b9175a671914d30ed86307dd136";
+
   public String extractUsername(String token) {
-    return extractClaim(token , Claims::getSubject);
+    return extractClaim(token, Claims::getSubject);
   }
-  public <T> T extractClaim(String token , Function<Claims , T> claimsResolver ){
+
+  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = extracAlltClaims(token);
     return claimsResolver.apply(claims);
   }
-  private Claims extracAlltClaims(String token){
-    return Jwts
-    .parserBuilder()
-            .setSigningKey(getSignInKey())
-            .build()
-            .parseClaimsJws(token)
-            .getBody();
+
+  private Claims extracAlltClaims(String token) {
+    return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
   }
 
   private Key getSignInKey() {
@@ -41,29 +40,27 @@ public class JwtService {
   }
 
 
-
   //? Genrate a token in overload
 
 
-  public String genrateToken(UserDetails userDetails){
-    return genrateToken(new HashMap<>() , userDetails);
+  public String genrateToken(User userDetails) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("email", userDetails.getEmail());
+    claims.put("name", userDetails.getName());
+    claims.put("id", userDetails.getId());
+    claims.put("role", userDetails.getRole());
+    return genrateToken(claims, userDetails);
   }
-  public String genrateToken(
-          Map<String , Object > extraClaims ,
-          UserDetails userDetails
 
-  ){
-    return Jwts
-            .builder()
-            .setClaims(extraClaims)
-            .setSubject(userDetails.getUsername())
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 ))//! the date of expire token
-            .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-            .compact(); //? generate and return the token
+  public String genrateToken(Map<String, Object> extraClaims, UserDetails userDetails
+
+  ) {
+    return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))//! the date of expire token
+            .signWith(getSignInKey(), SignatureAlgorithm.HS256).compact(); //? generate and return the token
   }
+
   // ? token validation with the userDetail to se its the same token or not
-  public boolean isTokenValidate(String token  , UserDetails userDetails) {
+  public boolean isTokenValidate(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
   }
@@ -73,6 +70,6 @@ public class JwtService {
   }
 
   private Date extractExpiration(String token) {
-    return extractClaim(token , Claims::getExpiration);
+    return extractClaim(token, Claims::getExpiration);
   }
 }

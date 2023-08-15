@@ -1,6 +1,7 @@
 package com.jirademo.jiraapi.issue;
 
 import com.jirademo.jiraapi.comment.Comment;
+import com.jirademo.jiraapi.project.Project;
 import com.jirademo.jiraapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,11 @@ public class Issue {
   private LocalDateTime updatedAt;
 
   private Integer reporterId;
+
+  @ManyToOne
+  @JoinColumn(name = "project_id")
+  private Project project;
+
 
   @OneToMany(mappedBy = "issues")
   private List<Comment> comments;

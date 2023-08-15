@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.project;
 
+import com.jirademo.jiraapi.issue.Issue;
 import com.jirademo.jiraapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,9 @@ public class Project {
   private LocalDateTime updatedAt ;
   @Enumerated(EnumType.STRING)
   private Category category;
+
+  @OneToMany(mappedBy = "project")
+  private List<Issue> issues;
 
   @ManyToMany(mappedBy = "projects")
   private List<User>  users ;

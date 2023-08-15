@@ -1,22 +1,19 @@
 package com.jirademo.jiraapi.auth;
 
-import com.jirademo.jiraapi.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class RegisterRequest {
+public class RegisterAdminRequest {
 
   private String name;
 
-  private String password;
-
   private String email;
 
-  private Role role;
+  private String password;
 }

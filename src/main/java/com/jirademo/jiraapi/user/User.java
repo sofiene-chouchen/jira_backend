@@ -1,5 +1,8 @@
 package com.jirademo.jiraapi.user;
 
+import com.jirademo.jiraapi.comment.Comment;
+import com.jirademo.jiraapi.issue.Issue;
+import com.jirademo.jiraapi.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,11 +32,29 @@ public class User implements UserDetails {
   private String email;
 
   private String password;
+
   private String avatarUrl;
+
   private LocalDateTime createdAt;
+
   private LocalDateTime updateAt;
+
   @Enumerated(EnumType.STRING)
   private Role role;
+
+  @ManyToMany()
+  @JoinTable(
+          name = "user_project",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "project_id")
+  )
+  private List<Project> projects;
+
+  @OneToMany(mappedBy = "user")
+  private List<Comment> comments;
+
+  @OneToMany(mappedBy = "user")
+  private List<Issue> issues;
 
 
   @Override

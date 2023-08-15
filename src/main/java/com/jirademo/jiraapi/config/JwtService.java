@@ -59,6 +59,7 @@ public class JwtService {
             .signWith(getSignInKey(), SignatureAlgorithm.HS256).compact(); //? generate and return the token
   }
 
+
   // ? token validation with the userDetail to se its the same token or not
   public boolean isTokenValidate(String token, UserDetails userDetails) {
     final String username = extractUsername(token);

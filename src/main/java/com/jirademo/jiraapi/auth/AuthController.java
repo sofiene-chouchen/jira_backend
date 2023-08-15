@@ -13,6 +13,13 @@ public class AuthController {
 
   private final AuthService service;
 
+  @PostMapping("/registerAdmin")
+  public ResponseEntity<AuthenticationResponse> registerAdmin(
+          @RequestBody RegisterAdminRequest request
+  ) {
+    return ResponseEntity.ok(service.registerAdmin(request));
+  }
+
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(
           @RequestBody RegisterRequest request
@@ -21,7 +28,7 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<AuthenticationResponse> register(
+  public ResponseEntity<AuthenticationResponse> login(
           @RequestBody LoginRequest request
   ) {
     return ResponseEntity.ok(service.login(request));

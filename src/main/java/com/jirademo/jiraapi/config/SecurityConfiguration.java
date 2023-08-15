@@ -18,9 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
 
-  private final JwtAuthenticationFilter jwtAuthFilter ;
+  private final JwtAuthenticationFilter jwtAuthFilter;
 
-  private final AuthenticationProvider authenticationProvider ;
+  private final AuthenticationProvider authenticationProvider;
+
   //* spring bech ylawej ala securityfilrechaine as a bean
   //! lena nzido el white list mta3na eli houma el route eli nst7a9ouch fiha token
   @Bean
@@ -36,7 +37,7 @@ public class SecurityConfiguration {
                     .authenticated())
             .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //! the spring will create a session in each request
             .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter , UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 }

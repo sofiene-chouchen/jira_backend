@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.issue;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jirademo.jiraapi.comment.Comment;
 import com.jirademo.jiraapi.project.Project;
 import com.jirademo.jiraapi.user.User;
@@ -30,6 +31,9 @@ public class Issue {
   @Enumerated(EnumType.ORDINAL)
   private IssuePriority priority;
 
+  @Enumerated(EnumType.STRING)
+  private IssueStatus status;
+
   private Double listPosition;
 
   private String description;
@@ -50,8 +54,8 @@ public class Issue {
 
   @ManyToOne
   @JoinColumn(name = "project_id")
+  @JsonBackReference
   private Project project;
-
 
   @OneToMany(mappedBy = "issues")
   private List<Comment> comments;

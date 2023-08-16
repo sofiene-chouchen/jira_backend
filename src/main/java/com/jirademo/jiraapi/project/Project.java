@@ -34,7 +34,12 @@ public class Project {
   @OneToMany(mappedBy = "project")
   private List<Issue> issues;
 
-  @ManyToMany(mappedBy = "projects")
+  @ManyToMany()
+  @JoinTable(
+          name = "user_project",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "project_id")
+  )
   private List<User>  users ;
 
 }

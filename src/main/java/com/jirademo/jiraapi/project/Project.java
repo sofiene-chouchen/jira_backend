@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jirademo.jiraapi.issue.Issue;
 import com.jirademo.jiraapi.user.User;
 import jakarta.persistence.*;
@@ -19,27 +20,24 @@ import java.util.List;
 public class Project {
   @Id
   @GeneratedValue
-  private Integer id ;
+  private Integer id;
 
-  private String name ;
+  private String name;
 
-  private String description ;
+  private String description;
 
-  private LocalDateTime createdAt ;
+  private LocalDateTime createdAt;
 
-  private LocalDateTime updatedAt ;
+  private LocalDateTime updatedAt;
   @Enumerated(EnumType.STRING)
   private Category category;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "project")
   private List<Issue> issues;
 
-  @ManyToMany()
-  @JoinTable(
-          name = "user_project",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "project_id")
-  )
-  private List<User>  users ;
+  @JsonIgnore
+  @ManyToMany(mappedBy = "projects")
+  private List<User> users;
 
 }

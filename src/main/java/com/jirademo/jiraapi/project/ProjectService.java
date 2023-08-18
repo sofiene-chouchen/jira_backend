@@ -13,16 +13,32 @@ public class ProjectService {
     this.repository = repository;
   }
 
-  public Project createProject(Project project ) {
-
+  public Project createProject(ProjectDto projectDto) {
     Project newProject = Project.builder()
-            .name(project.getName())
-            .category(project.getCategory())
+            .name(projectDto.getName())
+            .category(projectDto.getCategory())
             .createdAt(LocalDateTime.now())
-            .description(project.getDescription())
+            .description(projectDto.getDescription())
             .build();
     return repository.save(newProject);
   }
+
+
+  public Project AddUser(Integer projectId , Project project){
+    Project project1 = repository.findById(projectId).orElseThrow(() -> new RuntimeException("project dosnet exist "));
+    project1 =Project.builder()
+            .users(project.getUsers())
+            .build();
+    return repository.save(project1);
+  }
+
+
+
+
+
+
+
+
 
   /*public void addUserToProject(Integer projectId, Integer userId) {
     Project project = repository.findById(projectId)
@@ -35,7 +51,7 @@ public class ProjectService {
     repository.save(project);
   }*/
 
-  public List<Project> getProject (){
+  public List<Project> getProject() {
     return repository.findAll();
 
   }

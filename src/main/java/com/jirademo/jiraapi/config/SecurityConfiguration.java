@@ -29,7 +29,7 @@ public class SecurityConfiguration {
     http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                    //! list mta3 req patern app
+                    //! list mta3 req pattern app
                     .requestMatchers("/api/v1/auth/**")
                     .permitAll()
                     .anyRequest()

@@ -51,4 +51,9 @@ public class IssueService {
   }
 
 
+  public List<Issue> getIssueByProject(Integer id) {
+    return repository.findByProjectId(id);
+  }
+
+
 }

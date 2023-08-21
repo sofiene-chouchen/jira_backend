@@ -25,4 +25,9 @@ public class IssueController {
   public ResponseEntity<List<Issue>> getIssues() {
     return ResponseEntity.ok(service.getIssue());
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<List<Issue>> getByProject(@PathVariable Integer id) {
+    return ResponseEntity.ok(service.getIssueByProject(id));
+  }
 }

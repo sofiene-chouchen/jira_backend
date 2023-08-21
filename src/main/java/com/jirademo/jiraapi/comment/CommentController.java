@@ -1,6 +1,5 @@
 package com.jirademo.jiraapi.comment;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +25,10 @@ public class CommentController {
   public ResponseEntity<?> getComment() {
     return ResponseEntity.ok(service.getComment());
 
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<List<Comment>> findbyIssue(@PathVariable Integer id) {
+    return ResponseEntity.ok(service.getByIssue(id));
   }
 }

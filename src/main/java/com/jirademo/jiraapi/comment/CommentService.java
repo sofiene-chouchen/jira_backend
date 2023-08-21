@@ -17,6 +17,7 @@ public class CommentService {
   private final IssueRepository issueRepository;
 
   private final UserRepository userRepository;
+
   public CommentService(CommentRepository repository, IssueRepository issueRepository, UserRepository userRepository) {
     this.repository = repository;
     this.issueRepository = issueRepository;
@@ -24,8 +25,8 @@ public class CommentService {
   }
 
   public ResponseEntity<Comment> createComment(CommentRequest comment) {
-    User user = userRepository.findById(comment.getUser()).orElseThrow(()->new RuntimeException("user not found"));
-    Issue issue = issueRepository.findById(comment.getIssues()).orElseThrow(()-> new RuntimeException("issue not found"));
+    User user = userRepository.findById(comment.getUser()).orElseThrow(() -> new RuntimeException("user not found"));
+    Issue issue = issueRepository.findById(comment.getIssues()).orElseThrow(() -> new RuntimeException("issue not found"));
     Comment newComment = Comment.builder()
             .body(comment.getBody())
             .issues(issue)
@@ -35,7 +36,12 @@ public class CommentService {
     return ResponseEntity.ok(repository.save(newComment));
   }
 
-  public ResponseEntity<List<Comment>> getComment (){
+  public ResponseEntity<List<Comment>> getComment() {
     return ResponseEntity.ok(repository.findAll());
   }
+
+  public List<Comment> getByIssue(Integer id) {
+    return repository.findByIssuesId(id);
+  }
+
 }

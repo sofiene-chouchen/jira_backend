@@ -56,7 +56,7 @@ public class Issue {
   @JsonIgnore
   private Project project;
 
-
+  @JsonIgnore
   @OneToMany(mappedBy = "issues")
   private List<Comment> comments;
 

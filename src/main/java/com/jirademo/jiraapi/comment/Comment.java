@@ -27,13 +27,11 @@ public class Comment {
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
-
   @JsonIgnore
   @ManyToOne()
   @JoinColumn(name = "issue_id")
   private Issue issues;
 
-  @JsonIgnore
   @ManyToOne()
   @JoinColumn(name = "user_id")
   private User user;

@@ -22,7 +22,7 @@ public class CommentController {
     return ResponseEntity.ok(service.createComment(comment).getBody());
   }
 
-  @GetMapping
+  @GetMapping("")
   public ResponseEntity<?> getComment() {
     return ResponseEntity.ok(service.getComment());
 

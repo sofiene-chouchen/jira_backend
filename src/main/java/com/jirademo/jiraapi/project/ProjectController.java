@@ -25,9 +25,9 @@ public class ProjectController {
     return service.getProject();
   }
 
-  @PutMapping("/{projectId}")
-  public ResponseEntity<Project> addUser(@PathVariable Integer projectId, @RequestBody Project project) {
-    return ResponseEntity.ok(service.AddUser(projectId, project));
+  @PutMapping("")
+  public void addUser(@RequestBody RequestAddUser requestAddUser) {
+      service.AddUser(requestAddUser);
   }
 }
 

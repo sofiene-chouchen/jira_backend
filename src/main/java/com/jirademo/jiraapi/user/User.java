@@ -43,15 +43,11 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @ManyToMany
-  @JoinTable(
-          name = "user_project",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "project_id")
-  )
+  @JsonIgnore
+  @ManyToMany(mappedBy = "users")
   private List<Project> projects;
 
-
+  @JsonIgnore
   @OneToMany(mappedBy = "user")
   private List<Comment> comments;
 

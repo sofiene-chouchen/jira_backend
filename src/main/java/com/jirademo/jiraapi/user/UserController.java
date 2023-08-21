@@ -11,7 +11,7 @@ import java.util.List;
 public class UserController {
 
 
-  private final UserService service ;
+  private final UserService service;
 
 
   public UserController(UserService service) {
@@ -19,7 +19,7 @@ public class UserController {
   }
 
   @GetMapping("")
-  public List<User> getUser(){
+  public List<User> getUser() {
     return service.getuser();
   }
 }

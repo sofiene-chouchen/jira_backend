@@ -1,5 +1,7 @@
 package com.jirademo.jiraapi.project;
 
+import com.jirademo.jiraapi.user.User;
+import com.jirademo.jiraapi.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -9,8 +11,11 @@ import java.util.List;
 public class ProjectService {
   private final ProjectRepository repository;
 
-  public ProjectService(ProjectRepository repository) {
+  private final UserRepository userRepository;
+
+  public ProjectService(ProjectRepository repository, UserRepository userRepository) {
     this.repository = repository;
+    this.userRepository = userRepository;
   }
 
   public Project createProject(ProjectDto projectDto) {
@@ -24,12 +29,11 @@ public class ProjectService {
   }
 
 
-  public Project AddUser(Integer projectId , Project project){
-    Project project1 = repository.findById(projectId).orElseThrow(() -> new RuntimeException("project dosnet exist "));
-    project1 =Project.builder()
-            .users(project.getUsers())
-            .build();
-    return repository.save(project1);
+  public void AddUser(RequestAddUser response) {
+    Project project = repository.findById(response.getProjectId()).orElseThrow(() -> new RuntimeException("project not find"));
+    User user = userRepository.findById(response.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
+    project.getUsers().add(user);
+     repository.save(project);
   }
 
 

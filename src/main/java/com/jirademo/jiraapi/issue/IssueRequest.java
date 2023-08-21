@@ -1,7 +1,5 @@
 package com.jirademo.jiraapi.issue;
 
-import com.jirademo.jiraapi.project.Project;
-import com.jirademo.jiraapi.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

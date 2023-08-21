@@ -1,19 +1,16 @@
 package com.jirademo.jiraapi.project;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jirademo.jiraapi.issue.Issue;
 import com.jirademo.jiraapi.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -32,12 +29,15 @@ public class Project {
   @Enumerated(EnumType.STRING)
   private Category category;
 
-  @JsonIgnore
   @OneToMany(mappedBy = "project")
   private List<Issue> issues;
 
-  @JsonIgnore
-  @ManyToMany(mappedBy = "projects")
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(
+          name = "user_project",
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
+  )
   private List<User> users;
 
 }

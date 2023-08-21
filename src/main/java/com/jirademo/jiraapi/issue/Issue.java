@@ -51,9 +51,9 @@ public class Issue {
   private Integer reporterId;
 
 
-
   @ManyToOne
   @JoinColumn(name = "project_id")
+  @JsonIgnore
   private Project project;
 
 

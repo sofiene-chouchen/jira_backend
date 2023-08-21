@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class IssueService {
@@ -16,13 +17,11 @@ public class IssueService {
   private final UserRepository userRepository;
 
   private final ProjectRepository projectRepository;
-  private final ModelMapper modelMapper;
 
   public IssueService(IssueRepository repository, ProjectRepository projectRepository, UserRepository userRepository, ModelMapper modelMapper) {
     this.repository = repository;
     this.userRepository = userRepository;
     this.projectRepository = projectRepository;
-    this.modelMapper = modelMapper;
   }
 
   public ResponseEntity<Issue> createIssue(IssueRequest issueRequest) {
@@ -45,6 +44,10 @@ public class IssueService {
             .project(project)
             .build();
     return ResponseEntity.ok(repository.save(Addissue));
+  }
+
+  public List<Issue> getIssue() {
+    return repository.findAll();
   }
 
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -28,32 +29,28 @@ public class ProjectService {
     return repository.save(newProject);
   }
 
+  public void updateProject(Integer id, Project project) {
+    Project projectUpdate = repository.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+    projectUpdate.setCategory(project.getCategory());
+    repository.save(projectUpdate);
+  }
+
 
   public void AddUser(RequestAddUser response) {
     Project project = repository.findById(response.getProjectId()).orElseThrow(() -> new RuntimeException("project not find"));
     User user = userRepository.findById(response.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
     project.getUsers().add(user);
-     repository.save(project);
+    repository.save(project);
   }
 
+  public Optional<Project> getProjectById(Integer id) {
+    return repository.findById(id);
+  }
 
-
-
-
-
-
-
-
-  /*public void addUserToProject(Integer projectId, Integer userId) {
-    Project project = repository.findById(projectId)
-           .orElseThrow(() -> new EntityNotFoundException("Project not found"));
-
-    User user = repository.findById(userId)
-     .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-    project.getUsers().add(user);
-    repository.save(project);
-  }*/
+  public Project getPrijectByUser(Integer userId ){
+    User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found"));
+    return repository.findByUsers(user);
+  }
 
   public List<Project> getProject() {
     return repository.findAll();

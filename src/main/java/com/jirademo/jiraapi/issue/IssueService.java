@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IssueService {
@@ -25,24 +26,28 @@ public class IssueService {
   }
 
   public ResponseEntity<Issue> createIssue(IssueRequest issueRequest) {
-    User user = userRepository.findById(issueRequest.getUser()).orElseThrow(() -> new RuntimeException("user not found"));
+    User user = null;
+    if (issueRequest.getUser() != null) {
+      user = userRepository.findById(issueRequest.getUser()).orElseThrow(() -> new RuntimeException("user not found"));
+    }
     Project project = projectRepository.findById(issueRequest.getProject()).orElseThrow(() -> new RuntimeException("project not found"));
     Issue Addissue = Issue.builder()
             .title(issueRequest.getTitle())
-            .type(issueRequest.getType())
+            .type(issueRequest.getType()).
+            status(issueRequest.getStatus())
             .createdAt(LocalDateTime.now())
             .description(issueRequest.getDescription())
-            .descriptionText(issueRequest.getDescriptionText())
-            .estimate(issueRequest.getEstimate())
+            .descriptionText(issueRequest.getDescriptionText()).
+            estimate(issueRequest.getEstimate())
             .listPosition(issueRequest.getListPosition())
-            .priority(issueRequest.getPriority())
-            .type(issueRequest.getType())
-            .reporterId(issueRequest.getReporterId())
+            .priority(issueRequest.getPriority()).
+            type(issueRequest.getType()).
+            reporterId(issueRequest.getReporterId())
             .timeRemaining(issueRequest.getTimeRemaining())
             .timeSpent(issueRequest.getTimeSpent())
             .user(user)
-            .project(project)
-            .build();
+            .project(project).
+            build();
     return ResponseEntity.ok(repository.save(Addissue));
   }
 
@@ -50,10 +55,48 @@ public class IssueService {
     return repository.findAll();
   }
 
-
   public List<Issue> getIssueByProject(Integer id) {
     return repository.findByProjectId(id);
   }
 
+  public Optional<Issue> getbyId(Integer id) {
+    return repository.findById(id);
+  }
 
+  public void IssueDelete() {
+    repository.deleteAll();
+  }
+
+  public void UpdateIsuue(Integer id, Issue issueRequest) {
+    Issue issue = repository.findById(id).orElseThrow(() -> new RuntimeException("the issue not exist "));
+    if (issueRequest.getPriority() == null) {
+      issue.setPriority(issue.getPriority());
+    } else {
+      issue.setPriority(issueRequest.getPriority());
+    }
+    if (issueRequest.getListPosition() == null) {
+      issue.setListPosition(issue.getListPosition());
+    } else {
+      issue.setListPosition(issueRequest.getListPosition());
+
+    }
+    if (issueRequest.getStatus() == null) {
+      issue.setStatus(issue.getStatus());
+    } else {
+
+      issue.setStatus(issueRequest.getStatus());
+    }
+    if (issueRequest.getType() == null) {
+      issue.setType(issue.getType());
+    } else {
+      issue.setType(issueRequest.getType());
+    }
+    if (issueRequest.getTimeRemaining() == null) {
+      issue.setTimeRemaining(issue.getTimeRemaining());
+    } else {
+      issue.setTimeRemaining(issueRequest.getTimeRemaining());
+    }
+    issue.setUpdatedAt(LocalDateTime.now());
+    repository.save(issue);
+  }
 }

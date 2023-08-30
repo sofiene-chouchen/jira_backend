@@ -26,6 +26,7 @@ public class Project {
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
+
   @Enumerated(EnumType.STRING)
   private Category category;
 
@@ -35,8 +36,8 @@ public class Project {
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(
           name = "user_project",
-          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-          inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
+          joinColumns = @JoinColumn(name = "Project_id", referencedColumnName = "id"),
+          inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
   )
   private List<User> users;
 

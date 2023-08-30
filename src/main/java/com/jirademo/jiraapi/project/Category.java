@@ -2,7 +2,7 @@ package com.jirademo.jiraapi.project;
 
 public enum Category {
 
-  SOFTWARE ,
+  SOFTWARE,
   MARKETING,
   BUSINESS
 }

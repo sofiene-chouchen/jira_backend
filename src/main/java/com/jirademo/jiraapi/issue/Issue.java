@@ -26,7 +26,7 @@ public class Issue {
   @Enumerated(EnumType.STRING)
   private IssueType type;
 
-  @Enumerated(EnumType.ORDINAL)
+  @Enumerated(EnumType.ORDINAL )
   private IssuePriority priority;
 
   @Enumerated(EnumType.STRING)

@@ -44,4 +44,7 @@ public class CommentService {
     return repository.findByIssuesId(id);
   }
 
+  public void deleteComment(){
+    repository.deleteAll();
+  }
 }

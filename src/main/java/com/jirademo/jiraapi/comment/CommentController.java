@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comment")
+@CrossOrigin(origins = "*")
 public class CommentController {
 
   private final CommentService service;
@@ -30,5 +31,10 @@ public class CommentController {
   @GetMapping("/{id}")
   public ResponseEntity<List<Comment>> findbyIssue(@PathVariable Integer id) {
     return ResponseEntity.ok(service.getByIssue(id));
+  }
+
+  @DeleteMapping("")
+  public void deleteComments() {
+    service.deleteComment();
   }
 }

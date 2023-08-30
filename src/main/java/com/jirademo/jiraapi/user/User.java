@@ -25,7 +25,7 @@ import java.util.List;
 @Table(name = "_user")
 public class User implements UserDetails {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
   private String name;
@@ -71,16 +71,19 @@ public class User implements UserDetails {
     return email;
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonLocked() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isCredentialsNonExpired() {
     return true;

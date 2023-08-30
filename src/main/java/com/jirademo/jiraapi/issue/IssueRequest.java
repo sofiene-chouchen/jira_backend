@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.issue;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class IssueRequest {
 
   private Integer reporterId;
 
+  @Nullable
   private Integer user;
 
   private Integer project;

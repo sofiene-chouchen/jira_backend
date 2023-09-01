@@ -7,7 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comment")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class CommentController {
 
   private final CommentService service;
@@ -37,4 +37,13 @@ public class CommentController {
   public void deleteComments() {
     service.deleteComment();
   }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable Integer id){
+    service.deletCommentById(id);
+  }
+  @PutMapping("/{id}")
+  public void updateComment(@PathVariable Integer id , @RequestBody Comment comment){
+    service.updateComment(id , comment);
+  }
+
 }

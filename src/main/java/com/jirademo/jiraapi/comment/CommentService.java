@@ -44,7 +44,28 @@ public class CommentService {
     return repository.findByIssuesId(id);
   }
 
-  public void deleteComment(){
+  public void updateComment(Integer id, Comment comment) {
+    Comment updateComment = repository.findById(id).orElseThrow(() -> new RuntimeException("comment not found"));
+    if(comment.getBody() == null){
+      updateComment.setBody(updateComment.getBody());
+    }else {
+      updateComment.setBody(comment.getBody());
+    }
+    if(comment.getUser() == null){
+      updateComment.setUser(updateComment.getUser());
+    }
+    else {
+      updateComment.setUser(comment.getUser());
+    }
+    updateComment.setUpdatedAt(LocalDateTime.now());
+    repository.save(updateComment);
+  }
+
+  public void deleteComment() {
     repository.deleteAll();
+  }
+
+  public void deletCommentById(Integer id){
+    repository.deleteById(id);
   }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/project")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class ProjectController {
 
   private ProjectService service;

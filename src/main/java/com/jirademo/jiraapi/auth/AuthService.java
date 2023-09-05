@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -37,7 +36,8 @@ public class AuthService {
             .token(jwt)
             .build();
   }
-public AuthenticationResponse register(RegisterRequest request){
+
+  public AuthenticationResponse register(RegisterRequest request) {
     var user = User.builder()
             .name(request.getName())
             .email(request.getEmail())
@@ -50,7 +50,8 @@ public AuthenticationResponse register(RegisterRequest request){
     return AuthenticationResponse.builder()
             .token(jwt)
             .build();
-}
+  }
+
   public AuthenticationResponse login(LoginRequest request) {
 
     authenticationManager.authenticate(

@@ -1,14 +1,23 @@
 package com.jirademo.jiraapi.issue;
 
-public enum IssuePriority {
-  HIGHEST(5),
-  HIGH(4),
-  MEDIUM(3),
-  LOW(2),
-  LOWEST(1);
-  final int value;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-  IssuePriority(int level) {
-    this.value = level;
+public enum IssuePriority {
+  LOWEST("0"),
+  LOW("1"),
+  MEDIUM("2"),
+  HIGH("3"),
+  HIGHEST("4");
+  private final String value;
+
+  IssuePriority(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String getValue() {
+    return value;
   }
 }

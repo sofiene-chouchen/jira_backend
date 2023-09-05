@@ -3,7 +3,10 @@ package com.jirademo.jiraapi.user;
 public enum Role {
   USER ,
   ADMIN,
-  PROJECTMANGER,
+  DEV,
+  ARCHITECT,
+  SCRUM_MASTER,
+  PRODUCT_OWNER ,
 
 
 }

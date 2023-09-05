@@ -1,18 +1,18 @@
 package com.jirademo.jiraapi.issue;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jirademo.jiraapi.comment.Comment;
+import com.jirademo.jiraapi.project.Project;
 import com.jirademo.jiraapi.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -26,8 +26,11 @@ public class Issue {
   @Enumerated(EnumType.STRING)
   private IssueType type;
 
-  @Enumerated(EnumType.ORDINAL)
+  @Enumerated(EnumType.ORDINAL )
   private IssuePriority priority;
+
+  @Enumerated(EnumType.STRING)
+  private IssueStatus status;
 
   private Double listPosition;
 
@@ -47,8 +50,15 @@ public class Issue {
 
   private Integer reporterId;
 
+
+  @ManyToOne
+  @JoinColumn(name = "project_id")
+  @JsonIgnore
+  private Project project;
+
   @OneToMany(mappedBy = "issues")
   private List<Comment> comments;
+
 
   @ManyToOne
   @JoinColumn(name = "user_id")

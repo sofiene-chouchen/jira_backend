@@ -1,5 +1,6 @@
 package com.jirademo.jiraapi.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jirademo.jiraapi.comment.Comment;
 import com.jirademo.jiraapi.issue.Issue;
 import com.jirademo.jiraapi.project.Project;
@@ -24,7 +25,7 @@ import java.util.List;
 @Table(name = "_user")
 public class User implements UserDetails {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
   private String name;
@@ -42,21 +43,19 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @ManyToMany()
-  @JoinTable(
-          name = "user_project",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "project_id")
-  )
+  @JsonIgnore
+  @ManyToMany(mappedBy = "users")
   private List<Project> projects;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "user")
   private List<Comment> comments;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "user")
   private List<Issue> issues;
 
-
+  @JsonIgnore
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(role.name()));
@@ -72,16 +71,19 @@ public class User implements UserDetails {
     return email;
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonLocked() {
     return true;
   }
 
+  @JsonIgnore
   @Override
   public boolean isCredentialsNonExpired() {
     return true;

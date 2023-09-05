@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +56,9 @@ public class JwtService {
   public String genrateToken(Map<String, Object> extraClaims, UserDetails userDetails
 
   ) {
-    return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))//! the date of expire token
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(calendar.YEAR , 1);
+    return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(calendar.getTime())//! the date of expire token
             .signWith(getSignInKey(), SignatureAlgorithm.HS256).compact(); //? generate and return the token
   }
 

@@ -5,6 +5,7 @@ import com.jirademo.jiraapi.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +21,24 @@ public class ProjectService {
   }
 
   public Project createProject(ProjectDto projectDto) {
+
+    List<User> associatedUsers = new ArrayList<>();
+
+    for (Integer id : projectDto.getUsersId()) {
+      Optional<User> userOptional = userRepository.findById(id);
+
+      if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        associatedUsers.add(user);
+      } else {
+      }
+    }
     Project newProject = Project.builder()
             .name(projectDto.getName())
             .category(projectDto.getCategory())
             .createdAt(LocalDateTime.now())
             .description(projectDto.getDescription())
+            .users(associatedUsers)
             .build();
     return repository.save(newProject);
   }
@@ -47,13 +61,17 @@ public class ProjectService {
     return repository.findById(id);
   }
 
-  public Project getPrijectByUser(Integer userId ){
-    User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found"));
+  public Project getPrijectByUser(Integer userId) {
+    User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
     return repository.findByUsers(user);
   }
 
   public List<Project> getProject() {
-    return repository.findAll();
 
+    return repository.findAll();
+  }
+
+  public void deleteltById(Integer id) {
+    repository.deleteById(id);
   }
 }

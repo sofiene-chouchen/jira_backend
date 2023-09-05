@@ -41,8 +41,12 @@ public class ProjectController {
   public ResponseEntity<Optional<Project>> getProjectById(@PathVariable Integer id) {
     return ResponseEntity.ok(service.getProjectById(id));
   }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable Integer id){
+    service.deleteltById(id);
+  }
 
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   public void updateProject(@PathVariable Integer id, @RequestBody Project project) {
     service.updateProject(id, project);
   }

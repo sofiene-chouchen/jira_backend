@@ -16,7 +16,6 @@ import java.util.Optional;
 public class IssueService {
   private final IssueRepository repository;
   private final UserRepository userRepository;
-
   private final ProjectRepository projectRepository;
 
   public IssueService(IssueRepository repository, ProjectRepository projectRepository, UserRepository userRepository, ModelMapper modelMapper) {
@@ -78,12 +77,10 @@ public class IssueService {
       issue.setListPosition(issue.getListPosition());
     } else {
       issue.setListPosition(issueRequest.getListPosition());
-
     }
     if (issueRequest.getStatus() == null) {
       issue.setStatus(issue.getStatus());
     } else {
-
       issue.setStatus(issueRequest.getStatus());
     }
     if (issueRequest.getType() == null) {
@@ -96,7 +93,15 @@ public class IssueService {
     } else {
       issue.setTimeRemaining(issueRequest.getTimeRemaining());
     }
+    if (issueRequest.getEstimate() == null) {
+      issue.setEstimate(issue.getEstimate());
+    } else {
+      issue.setEstimate(issueRequest.getEstimate());
+    }
     issue.setUpdatedAt(LocalDateTime.now());
     repository.save(issue);
   }
+
+
+
 }

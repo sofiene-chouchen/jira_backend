@@ -30,10 +30,10 @@ public class Project {
   @Enumerated(EnumType.STRING)
   private Category category;
 
-  @OneToMany(mappedBy = "project")
+  @OneToMany(mappedBy = "project" , cascade = CascadeType.ALL)
   private List<Issue> issues;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST , CascadeType.MERGE})
   @JoinTable(
           name = "user_project",
           joinColumns = @JoinColumn(name = "Project_id", referencedColumnName = "id"),

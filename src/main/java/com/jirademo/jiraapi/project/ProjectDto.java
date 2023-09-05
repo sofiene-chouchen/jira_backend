@@ -16,4 +16,5 @@ public class ProjectDto {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private Category category;
+  private List<Integer> usersId;
 }

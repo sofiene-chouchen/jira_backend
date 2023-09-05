@@ -6,7 +6,6 @@ public enum Role {
   DEV,
   ARCHITECT,
   SCRUM_MASTER,
-
   PRODUCT_OWNER ,
 
 

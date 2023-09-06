@@ -1,10 +1,13 @@
 package com.jirademo.jiraapi.project;
 
 
+import com.jirademo.jiraapi.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +17,7 @@ public class RequestAddUser {
 
   private Integer projectId;
 
-  private Integer userId;
+  private List<Integer> userId;
+
 
 }

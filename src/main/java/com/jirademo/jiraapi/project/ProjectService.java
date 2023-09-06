@@ -52,8 +52,13 @@ public class ProjectService {
 
   public void AddUser(RequestAddUser response) {
     Project project = repository.findById(response.getProjectId()).orElseThrow(() -> new RuntimeException("project not find"));
-    User user = userRepository.findById(response.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
-    project.getUsers().add(user);
+    for (Integer id : response.getUserId()) {
+      Optional<User> user = userRepository.findById(id);
+      if (user.isPresent()) {
+        User users = user.get();
+        project.getUsers().add(users);
+      }
+    }
     repository.save(project);
   }
 

@@ -30,7 +30,7 @@ public class Project {
   @Enumerated(EnumType.STRING)
   private Category category;
 
-  @OneToMany(mappedBy = "project" , cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToMany( fetch = FetchType.LAZY ,mappedBy = "project" , cascade = {CascadeType.PERSIST, CascadeType.MERGE ,CascadeType.REMOVE})
   private List<Issue> issues;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST , CascadeType.MERGE})

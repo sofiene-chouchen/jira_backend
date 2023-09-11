@@ -51,7 +51,7 @@ public class Issue {
   private Integer reporterId;
 
 
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
   @JoinColumn(name = "project_id")
   @JsonIgnore
   private Project project;

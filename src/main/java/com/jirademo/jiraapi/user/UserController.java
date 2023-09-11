@@ -22,6 +22,8 @@ public class UserController{
   public List<User> getUser() {
     return service.getuser();
   }
-
-
+@DeleteMapping("/{id}")
+public void deleteUser(@PathVariable Integer id ){
+    service.deleteUser(id);
+}
 }
